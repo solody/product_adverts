@@ -1,0 +1,11 @@
+name: 'Product Adverts'
+type: module
+description: 'My Awesome Module'
+core: 8.x
+package: Custom
+dependencies:
+  - commerce_product
+  - product_adverts
+  - rest
+  - serialization
+  - views

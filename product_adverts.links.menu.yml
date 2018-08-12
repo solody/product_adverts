@@ -1,0 +1,8 @@
+
+# Product adverts menu items definition
+entity.product_adverts.collection:
+  title: '产品广告'
+  route_name: entity.product_adverts.collection
+  description: '产品广告管理'
+  parent: commerce.admin_commerce
+  weight: 100

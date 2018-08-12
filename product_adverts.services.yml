@@ -1,0 +1,6 @@
+services:
+  product_adverts.normalizer.product_adverts:
+    class: Drupal\product_adverts\Normalizer\ProductAdvertsNormalizer
+    arguments: ['@entity.manager']
+    tags:
+      - { name: normalizer, priority: 19 }

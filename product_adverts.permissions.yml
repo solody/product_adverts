@@ -1,0 +1,16 @@
+add product adverts entities:
+  title: 'Create new Product adverts entities'
+
+administer product adverts entities:
+  title: 'Administer Product adverts entities'
+  description: 'Allow to access the administration form to configure Product adverts entities.'
+  restrict access: true
+
+delete product adverts entities:
+  title: 'Delete Product adverts entities'
+
+edit product adverts entities:
+  title: 'Edit Product adverts entities'
+
+view product adverts entities:
+  title: 'View Product adverts entities'

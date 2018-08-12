@@ -1,0 +1,22 @@
+# Product adverts routing definition
+product_adverts.settings_tab:
+  route_name: product_adverts.settings
+  title: 'Settings'
+  base_route: product_adverts.settings
+
+entity.product_adverts.canonical:
+  route_name: entity.product_adverts.canonical
+  base_route: entity.product_adverts.canonical
+  title: 'View'
+
+entity.product_adverts.edit_form:
+  route_name: entity.product_adverts.edit_form
+  base_route: entity.product_adverts.canonical
+  title: 'Edit'
+
+entity.product_adverts.delete_form:
+  route_name:  entity.product_adverts.delete_form
+  base_route:  entity.product_adverts.canonical
+  title: Delete
+  weight: 10
+
