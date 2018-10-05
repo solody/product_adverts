@@ -16,7 +16,7 @@ use Drupal\user\UserInterface;
  *
  * @ContentEntityType(
  *   id = "product_adverts",
- *   label = @Translation("Product adverts"),
+ *   label = @Translation("产品广告"),
  *   handlers = {
  *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
  *     "list_builder" = "Drupal\product_adverts\ProductAdvertsListBuilder",
@@ -149,8 +149,7 @@ class ProductAdverts extends ContentEntityBase implements ProductAdvertsInterfac
     $fields = parent::baseFieldDefinitions($entity_type);
 
     $fields['title'] = BaseFieldDefinition::create('string')
-      ->setLabel(t('Title'))
-      ->setDescription(t('The title of the Product adverts entity.'))
+      ->setLabel(t('标题'))
       ->setSettings([
         'max_length' => 50,
         'text_processing' => 0,
@@ -206,16 +205,15 @@ class ProductAdverts extends ContentEntityBase implements ProductAdvertsInterfac
       ->setRequired(TRUE);
 
     $fields['status'] = BaseFieldDefinition::create('boolean')
-      ->setLabel(t('Publishing status'))
-      ->setDescription(t('A boolean indicating whether the Product adverts is published.'))
+      ->setLabel(t('发布状态'))
       ->setDefaultValue(TRUE)
       ->setDisplayOptions('form', [
         'type' => 'boolean_checkbox'
       ]);
 
     $fields['user_id'] = BaseFieldDefinition::create('entity_reference')
-      ->setLabel(t('Authored by'))
-      ->setDescription(t('The user ID of author of the Product adverts entity.'))
+      ->setLabel(t('作者'))
+      ->setDescription(t('添加本条数据的用户'))
       ->setSetting('target_type', 'user')
       ->setSetting('handler', 'default')
       ->setDisplayOptions('view', [
