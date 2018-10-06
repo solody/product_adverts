@@ -18,8 +18,8 @@ class ProductAdvertsListBuilder extends EntityListBuilder {
    * {@inheritdoc}
    */
   public function buildHeader() {
-    $header['id'] = $this->t('Product adverts ID');
-    $header['name'] = $this->t('Name');
+    $header['id'] = $this->t('ID');
+    $header['title'] = $this->t('标题');
     return $header + parent::buildHeader();
   }
 
@@ -29,7 +29,7 @@ class ProductAdvertsListBuilder extends EntityListBuilder {
   public function buildRow(EntityInterface $entity) {
     /* @var $entity \Drupal\product_adverts\Entity\ProductAdverts */
     $row['id'] = $entity->id();
-    $row['name'] = Link::createFromRoute(
+    $row['title'] = Link::createFromRoute(
       $entity->label(),
       'entity.product_adverts.edit_form',
       ['product_adverts' => $entity->id()]
