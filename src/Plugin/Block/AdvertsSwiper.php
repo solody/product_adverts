@@ -58,9 +58,17 @@ class AdvertsSwiper extends BlockBase implements ContainerFactoryPluginInterface
    */
   public function build() {
     $build = [];
-    $build['adverts_swiper']['#markup'] = 'Implement AdvertsSwiper.';
+    $build['#attached']['library'][] = 'product_adverts/swiper';
+    $build['adverts_swiper'] = [
+      '#theme' => 'adverts_swiper',
+      '#adverts' => [1,2,3]
+    ];
 
     return $build;
   }
 
+  public function getCacheMaxAge()
+  {
+    return 0;
+  }
 }

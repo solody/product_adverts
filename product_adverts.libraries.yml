@@ -1,0 +1,9 @@
+swiper:
+  version: VERSION
+  js:
+    asset/swiper/swiper.min.js: { minified: TRUE }
+    asset/adverts-swiper.js: { minified: False }
+  css:
+    theme:
+      asset/swiper/swiper.min.css: { minified: TRUE }
+      asset/adverts-swiper.css: { minified: False }

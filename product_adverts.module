@@ -22,3 +22,16 @@ function product_adverts_help($route_name, RouteMatchInterface $route_match) {
     default:
   }
 }
+
+/**
+ * Implements hook_theme().
+ */
+function product_adverts_theme($existing, $type, $theme, $path) {
+  return [
+    'adverts_swiper' => [
+      'variables' => [
+        'adverts' => []
+      ],
+    ]
+  ];
+}
