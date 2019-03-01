@@ -4,6 +4,7 @@ namespace Drupal\product_adverts\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\product_adverts\Entity\ProductAdverts;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 
@@ -57,11 +58,20 @@ class AdvertsSwiper extends BlockBase implements ContainerFactoryPluginInterface
    * {@inheritdoc}
    */
   public function build() {
+    /** @var ProductAdverts[] $product_adverts */
+    $product_adverts = ProductAdverts::loadMultiple();
+    $data = [];
+    foreach ($product_adverts as $advert) {
+      $data[] = [
+        'title' => $advert->getTitle(),
+        'image' => $advert->get('image')->entity
+      ];
+    }
     $build = [];
     $build['#attached']['library'][] = 'product_adverts/swiper';
     $build['adverts_swiper'] = [
       '#theme' => 'adverts_swiper',
-      '#adverts' => [1,2,3]
+      '#adverts' => $data
     ];
 
     return $build;

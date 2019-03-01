@@ -13,9 +13,9 @@
 #}
 <div class="swiper-container">
   <div class="swiper-wrapper">
-    <div class="swiper-slide">Slide 1</div>
-    <div class="swiper-slide">Slide 2</div>
-    <div class="swiper-slide">Slide 3</div>
+    {% for advert in adverts %}
+      <div class="swiper-slide"><img src="{{ file_url(advert.image.fileuri) }}"></div>
+    {% endfor %}
   </div>
 
   <div class="swiper-pagination"></div>
