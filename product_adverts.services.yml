@@ -4,3 +4,6 @@ services:
     arguments: ['@entity.manager']
     tags:
       - { name: normalizer, priority: 19 }
+  product_adverts.top_products_creator:
+    class: Drupal\product_adverts\TopProductsCreator
+    arguments: ['@entity_type.manager']

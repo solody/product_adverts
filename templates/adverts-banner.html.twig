@@ -1,0 +1,22 @@
+{#
+/**
+* @file
+* Default theme implementation to display a block.
+*
+* @see template_preprocess_block()
+*
+* @ingroup themeable
+*/
+#}
+<!-- Banner section -->
+<section class="banner-section">
+  <div class="container">
+    <div class="banner set-bg" data-setbg="{{ file_url(advert.image.fileuri) }}">
+      {% if show_new_tag %}<div class="tag-new">NEW</div>{% endif %}
+      <span style="color: {{ text_color}}">{{ advert.sub_title }}</span>
+      <h2 style="color: {{ text_color }}">{{ advert.title }}</h2>
+      <a href="{{ advert.url_to_product }}" class="site-btn">{{ 'SHOP NOW'|t }}</a>
+    </div>
+  </div>
+</section>
+<!-- Banner section end  -->

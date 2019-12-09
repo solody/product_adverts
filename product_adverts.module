@@ -32,6 +32,25 @@ function product_adverts_theme($existing, $type, $theme, $path) {
       'variables' => [
         'adverts' => []
       ],
+    ],
+    'adverts_banner' => [
+      'variables' => [
+        'advert' => NULL,
+        'show_new_tag' => false,
+        'text_color' => '#000000'
+      ]
+    ],
+    'adverts_latest_products' => [
+      'variables' => [
+        'products' => []
+      ]
+    ],
+    'adverts_top_products' => [
+      'variables' => [
+        'categories' => [],
+        'products' => [],
+        'more' => null
+      ]
     ]
   ];
 }

@@ -34,6 +34,16 @@ interface ProductAdvertsInterface extends ContentEntityInterface, EntityChangedI
    */
   public function setTitle($title);
 
+  public function getSubTitle();
+
+  public function setSubTitle($sub_title);
+
+  public function getSummary();
+
+  public function setSummary($summary);
+
+  public function getProduct();
+
   /**
    * Gets the Product adverts creation timestamp.
    *

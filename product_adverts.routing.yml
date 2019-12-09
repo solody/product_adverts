@@ -1,0 +1,8 @@
+
+product_adverts.top_products_controller_filterProducts:
+  path: '/ajax/product_adverts/filterProducts/{category}/{quantity}'
+  defaults:
+    _controller: '\Drupal\product_adverts\Controller\TopProductsController::filterProducts'
+    _title: 'filterProducts'
+  requirements:
+    _permission: 'access content'

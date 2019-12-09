@@ -2,11 +2,14 @@
 
 namespace Drupal\product_adverts\Entity;
 
+use Drupal\commerce_product\Entity\Product;
+use Drupal\commerce_product\Entity\ProductInterface;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Entity\ContentEntityBase;
 use Drupal\Core\Entity\EntityChangedTrait;
 use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\user\EntityOwnerTrait;
 use Drupal\user\UserInterface;
 
 /**
@@ -16,7 +19,7 @@ use Drupal\user\UserInterface;
  *
  * @ContentEntityType(
  *   id = "product_adverts",
- *   label = @Translation("产品广告"),
+ *   label = @Translation("Product Adverts"),
  *   handlers = {
  *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
  *     "list_builder" = "Drupal\product_adverts\ProductAdvertsListBuilder",
@@ -40,6 +43,7 @@ use Drupal\user\UserInterface;
  *     "label" = "title",
  *     "uuid" = "uuid",
  *     "uid" = "user_id",
+ *     "owner" = "user_id",
  *     "langcode" = "langcode",
  *     "status" = "status",
  *   },
@@ -56,6 +60,7 @@ use Drupal\user\UserInterface;
 class ProductAdverts extends ContentEntityBase implements ProductAdvertsInterface {
 
   use EntityChangedTrait;
+  use EntityOwnerTrait;
 
   /**
    * {@inheritdoc}
@@ -85,6 +90,36 @@ class ProductAdverts extends ContentEntityBase implements ProductAdvertsInterfac
   /**
    * {@inheritdoc}
    */
+  public function getSubTitle() {
+    return $this->get('sub_title')->value;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setSubTitle($sub_title) {
+    $this->set('sub_title', $sub_title);
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getSummary() {
+    return $this->get('summary')->value;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setSummary($summary) {
+    $this->set('summary', $summary);
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function getCreatedTime() {
     return $this->get('created')->value;
   }
@@ -94,36 +129,6 @@ class ProductAdverts extends ContentEntityBase implements ProductAdvertsInterfac
    */
   public function setCreatedTime($timestamp) {
     $this->set('created', $timestamp);
-    return $this;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getOwner() {
-    return $this->get('user_id')->entity;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getOwnerId() {
-    return $this->get('user_id')->target_id;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function setOwnerId($uid) {
-    $this->set('user_id', $uid);
-    return $this;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function setOwner(UserInterface $account) {
-    $this->set('user_id', $account->id());
     return $this;
   }
 
@@ -149,7 +154,7 @@ class ProductAdverts extends ContentEntityBase implements ProductAdvertsInterfac
     $fields = parent::baseFieldDefinitions($entity_type);
 
     $fields['title'] = BaseFieldDefinition::create('string')
-      ->setLabel(t('标题'))
+      ->setLabel(t('Title'))
       ->setSettings([
         'max_length' => 50,
         'text_processing' => 0,
@@ -164,8 +169,40 @@ class ProductAdverts extends ContentEntityBase implements ProductAdvertsInterfac
       ])
       ->setRequired(TRUE);
 
+    $fields['sub_title'] = BaseFieldDefinition::create('string')
+      ->setLabel(t('Sub Title'))
+      ->setSettings([
+        'max_length' => 50,
+        'text_processing' => 0,
+      ])
+      ->setDefaultValue('')
+      ->setDisplayOptions('view', [
+        'label' => 'above',
+        'type' => 'string'
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'string_textfield'
+      ])
+      ->setRequired(TRUE);
+
+    $fields['summary'] = BaseFieldDefinition::create('string_long')
+      ->setLabel(t('Summary'))
+      ->setSettings([
+        'max_length' => 50,
+        'text_processing' => 0,
+      ])
+      ->setDefaultValue('')
+      ->setDisplayOptions('view', [
+        'label' => 'above',
+        'type' => 'basic_string'
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'string_textarea'
+      ])
+      ->setRequired(TRUE);
+
     $fields['image'] = BaseFieldDefinition::create('image')
-      ->setLabel(t('主图'))
+      ->setLabel(t('Image'))
       ->setCardinality(1)
       ->setSettings([
         'file_directory' => 'commerce/product_adverts/image/[date:custom:Y]-[date:custom:m]',
@@ -190,8 +227,8 @@ class ProductAdverts extends ContentEntityBase implements ProductAdvertsInterfac
       ->setRequired(TRUE);
 
     $fields['product_id'] = BaseFieldDefinition::create('entity_reference')
-      ->setLabel('产品')
-      ->setDescription(t('关联的产品。'))
+      ->setLabel('Product')
+      ->setDescription(t('Product to show.'))
       ->setCardinality(1)
       ->setSetting('target_type', 'commerce_product')
       ->setSetting('handler', 'default')
@@ -205,15 +242,14 @@ class ProductAdverts extends ContentEntityBase implements ProductAdvertsInterfac
       ->setRequired(TRUE);
 
     $fields['status'] = BaseFieldDefinition::create('boolean')
-      ->setLabel(t('发布状态'))
+      ->setLabel(t('Publish status'))
       ->setDefaultValue(TRUE)
       ->setDisplayOptions('form', [
         'type' => 'boolean_checkbox'
       ]);
 
     $fields['user_id'] = BaseFieldDefinition::create('entity_reference')
-      ->setLabel(t('作者'))
-      ->setDescription(t('添加本条数据的用户'))
+      ->setLabel(t('Author'))
       ->setSetting('target_type', 'user')
       ->setSetting('handler', 'default')
       ->setDisplayOptions('view', [
@@ -241,4 +277,11 @@ class ProductAdverts extends ContentEntityBase implements ProductAdvertsInterfac
     return $fields;
   }
 
+  /**
+   * @return ProductInterface
+   */
+  public function getProduct()
+  {
+    return $this->get('product_id')->entity;
+  }
 }
