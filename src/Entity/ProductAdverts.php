@@ -241,6 +241,30 @@ class ProductAdverts extends ContentEntityBase implements ProductAdvertsInterfac
       ])
       ->setRequired(TRUE);
 
+    $fields['placements'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(t('Placements'))
+      ->setDescription(t('One advert can be placed to one or more placements.<a href=":url">Manage placements</a>', [
+        ':url' => '/admin/structure/taxonomy/manage/adverts_placements/overview']))
+      ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+      ->setSetting('display_description', true)
+      ->setSetting('target_type', 'taxonomy_term')
+      ->setSetting('handler', 'default')
+      ->setSetting('handler_settings', [
+        'target_bundles' => [
+          'adverts_placements'
+        ]
+      ])
+      ->setTranslatable(FALSE)
+      ->setDisplayOptions('view', [
+        'label' => 'above',
+        'type' => 'entity_reference_label'
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'options_buttons'
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+
     $fields['status'] = BaseFieldDefinition::create('boolean')
       ->setLabel(t('Publish status'))
       ->setDefaultValue(TRUE)

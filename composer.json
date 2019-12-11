@@ -10,5 +10,7 @@
     "issues": "https://www.drupal.org/project/issues/product_adverts",
     "source": "http://cgit.drupalcode.org/product_adverts"
   },
-  "require": { }
+  "require": {
+      "drupal/adverts": "^1.0"
+  }
 }

@@ -9,3 +9,4 @@ dependencies:
   - rest
   - serialization
   - views
+  - adverts
