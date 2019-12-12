@@ -31,25 +31,28 @@ class AdvertsBanner extends BlockBase {
     $CurrencyFormatter = \Drupal::service('commerce_price.currency_formatter');
 
     $build = [];
-    $build['#theme'] = 'adverts_banner';
-    $build['#show_new_tag'] = isset($config['show_new_tag']) ? $config['show_new_tag'] : false;
-    $build['#text_color'] = isset($config['text_color']) ? $config['text_color'] : '#000000';
-    $build['#advert'] = [
-      'title' => $advert->getTitle(),
-      'sub_title' => $advert->getSubTitle(),
-      'summary' => $advert->getSummary(),
-      'image' => $advert->get('image')->entity,
-      'product' => $advert->getProduct(),
-      'url_to_product' => Url::fromRoute('entity.commerce_product.canonical', ['commerce_product' => $advert->getProduct()->id()]),
-      'price_of_product' => $CurrencyFormatter->format(
-        $advert->getProduct()->getDefaultVariation()->getPrice()->getNumber(),
-        $advert->getProduct()->getDefaultVariation()->getPrice()->getCurrencyCode(),
-        [
-          'minimum_fraction_digits' => '0',
-          'maximum_fraction_digits' => '0',
-          'style' => 'accounting'
-        ])
-    ];
+
+    if ($advert instanceof ProductAdverts) {
+      $build['#theme'] = 'adverts_banner';
+      $build['#show_new_tag'] = isset($config['show_new_tag']) ? $config['show_new_tag'] : false;
+      $build['#text_color'] = isset($config['text_color']) ? $config['text_color'] : '#000000';
+      $build['#advert'] = [
+        'title' => $advert->getTitle(),
+        'sub_title' => $advert->getSubTitle(),
+        'summary' => $advert->getSummary(),
+        'image' => $advert->get('image')->entity,
+        'product' => $advert->getProduct(),
+        'url_to_product' => Url::fromRoute('entity.commerce_product.canonical', ['commerce_product' => $advert->getProduct()->id()]),
+        'price_of_product' => $CurrencyFormatter->format(
+          $advert->getProduct()->getDefaultVariation()->getPrice()->getNumber(),
+          $advert->getProduct()->getDefaultVariation()->getPrice()->getCurrencyCode(),
+          [
+            'minimum_fraction_digits' => '0',
+            'maximum_fraction_digits' => '0',
+            'style' => 'accounting'
+          ])
+      ];
+    }
 
     return $build;
   }

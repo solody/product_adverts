@@ -60,8 +60,18 @@ class AdvertsSwiper extends BlockBase implements ContainerFactoryPluginInterface
    * {@inheritdoc}
    */
   public function build() {
+    $termStorage = \Drupal::entityTypeManager()->getStorage('taxonomy_term');
+    $terms = $termStorage->loadByProperties([
+      'name' => 'Swiper'
+    ]);
+    $swiper_id = null;
+    if (count($terms)) $swiper_id = reset($terms)->id();
+    $productAdvertsStorage = \Drupal::entityTypeManager()->getStorage('product_adverts');
+    $query = $productAdvertsStorage->getQuery();
+    if ($swiper_id) $query->condition('placements', $swiper_id, 'CONTAINS');
+    $ids = $query->execute();
     /** @var ProductAdverts[] $product_adverts */
-    $product_adverts = ProductAdverts::loadMultiple();
+    $product_adverts = ProductAdverts::loadMultiple($ids);
     $data = [];
     /** @var \Drupal\commerce_price\CurrencyFormatter $CurrencyFormatter */
     $CurrencyFormatter = \Drupal::service('commerce_price.currency_formatter');
