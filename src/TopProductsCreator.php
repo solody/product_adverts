@@ -28,6 +28,11 @@ class TopProductsCreator implements TopProductsCreatorInterface {
   {
     $build['#theme'] = 'adverts_top_products';
 
+    $build['#block_title'] = t('BROWSE TOP SELLING PRODUCTS');
+    if (\Drupal::routeMatch()->getRouteName() === 'entity.commerce_store.canonical') {
+      $build['#block_title'] = t('');
+    }
+
     // Get all the product categories taxonomy terms.
     /** @var TermStorageInterface $termStorage */
     $termStorage = \Drupal::entityTypeManager()->getStorage('taxonomy_term');
@@ -66,6 +71,9 @@ class TopProductsCreator implements TopProductsCreatorInterface {
     $productStorage = \Drupal::entityTypeManager()->getStorage('commerce_product');
     $productQuery = $productStorage->getQuery();
     if ($category !== 'all') $productQuery->condition('categories', $category);
+    if (\Drupal::routeMatch()->getRouteName() === 'entity.commerce_store.canonical') {
+      $productQuery->condition('stores', 1);
+    }
     $productQuery->range(0, $quantity);
     $productQuery->sort('product_id', 'DESC'); // TODO:: Set the 'top' means to something cool.
     $productEntities = Product::loadMultiple($productQuery->execute());
@@ -76,10 +84,17 @@ class TopProductsCreator implements TopProductsCreatorInterface {
     }
     $build['#products'] = $products;
 
+    $more_title = t('LOAD MORE');
+    $more_url = \Drupal\Core\Url::fromUserInput('/product-search');
+    if (\Drupal::routeMatch()->getRouteName() === 'entity.commerce_store.canonical') {
+      $more_url = \Drupal\Core\Url::fromUserInput('/product-search/store/'.\Drupal::routeMatch()->getParameter('commerce_store')->id());
+      $more_title = t('Search products in store');
+    }
+
     $build['#more'] = [
       '#type' => 'link',
-      '#title' => t('LOAD MORE'),
-      '#url' => \Drupal\Core\Url::fromUserInput('/product-search')
+      '#title' => $more_title,
+      '#url' => $more_url
     ];
 
     return $build;

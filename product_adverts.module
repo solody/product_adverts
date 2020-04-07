@@ -47,6 +47,7 @@ function product_adverts_theme($existing, $type, $theme, $path) {
     ],
     'adverts_top_products' => [
       'variables' => [
+        'block_title' => null,
         'categories' => [],
         'products' => [],
         'more' => null
