@@ -19,7 +19,7 @@ class ProductAdvertsListBuilder extends EntityListBuilder {
    */
   public function buildHeader() {
     $header['id'] = $this->t('ID');
-    $header['title'] = $this->t('标题');
+    $header['title'] = $this->t('Title');
     return $header + parent::buildHeader();
   }
 

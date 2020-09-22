@@ -1,6 +1,6 @@
 name: 'Product Adverts'
 type: module
-description: 'My Awesome Module'
+description: 'Provides commerce product adverts.'
 core: 8.x
 package: Custom
 dependencies:

@@ -16,7 +16,7 @@ use Drupal\user\UserInterface;
  *
  * @ContentEntityType(
  *   id = "product_adverts",
- *   label = @Translation("产品广告"),
+ *   label = @Translation("Product adverts"),
  *   handlers = {
  *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
  *     "list_builder" = "Drupal\product_adverts\ProductAdvertsListBuilder",
@@ -149,7 +149,7 @@ class ProductAdverts extends ContentEntityBase implements ProductAdvertsInterfac
     $fields = parent::baseFieldDefinitions($entity_type);
 
     $fields['title'] = BaseFieldDefinition::create('string')
-      ->setLabel(t('标题'))
+      ->setLabel(t('Title'))
       ->setSettings([
         'max_length' => 50,
         'text_processing' => 0,
@@ -165,7 +165,7 @@ class ProductAdverts extends ContentEntityBase implements ProductAdvertsInterfac
       ->setRequired(TRUE);
 
     $fields['image'] = BaseFieldDefinition::create('image')
-      ->setLabel(t('主图'))
+      ->setLabel(t('Image'))
       ->setCardinality(1)
       ->setSettings([
         'file_directory' => 'commerce/product_adverts/image/[date:custom:Y]-[date:custom:m]',
@@ -190,8 +190,8 @@ class ProductAdverts extends ContentEntityBase implements ProductAdvertsInterfac
       ->setRequired(TRUE);
 
     $fields['product_id'] = BaseFieldDefinition::create('entity_reference')
-      ->setLabel('产品')
-      ->setDescription(t('关联的产品。'))
+      ->setLabel('Product')
+      ->setDescription(t('The product that the adverts relative to.'))
       ->setCardinality(1)
       ->setSetting('target_type', 'commerce_product')
       ->setSetting('handler', 'default')
@@ -202,18 +202,18 @@ class ProductAdverts extends ContentEntityBase implements ProductAdvertsInterfac
         'label' => 'inline',
         'type' => 'entity_reference_label'
       ])
-      ->setRequired(TRUE);
+      ->setRequired(FALSE);
 
     $fields['status'] = BaseFieldDefinition::create('boolean')
-      ->setLabel(t('发布状态'))
+      ->setLabel(t('Status'))
       ->setDefaultValue(TRUE)
       ->setDisplayOptions('form', [
         'type' => 'boolean_checkbox'
       ]);
 
     $fields['user_id'] = BaseFieldDefinition::create('entity_reference')
-      ->setLabel(t('作者'))
-      ->setDescription(t('添加本条数据的用户'))
+      ->setLabel(t('Author'))
+      ->setDescription(t('Who add this record.'))
       ->setSetting('target_type', 'user')
       ->setSetting('handler', 'default')
       ->setDisplayOptions('view', [

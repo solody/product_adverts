@@ -16,7 +16,7 @@ function product_adverts_help($route_name, RouteMatchInterface $route_match) {
     case 'help.page.product_adverts':
       $output = '';
       $output .= '<h3>' . t('About') . '</h3>';
-      $output .= '<p>' . t('My Awesome Module') . '</p>';
+      $output .= '<p>' . t('Provides commerce product adverts.') . '</p>';
       return $output;
 
     default:
