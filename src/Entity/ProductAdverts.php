@@ -183,7 +183,7 @@ class ProductAdverts extends ContentEntityBase implements ProductAdvertsInterfac
       ->setDisplayOptions('form', [
         'type' => 'string_textfield'
       ])
-      ->setRequired(TRUE);
+      ->setRequired(false);
 
     $fields['summary'] = BaseFieldDefinition::create('string_long')
       ->setLabel(t('Summary'))
@@ -199,7 +199,7 @@ class ProductAdverts extends ContentEntityBase implements ProductAdvertsInterfac
       ->setDisplayOptions('form', [
         'type' => 'string_textarea'
       ])
-      ->setRequired(TRUE);
+      ->setRequired(false);
 
     $fields['image'] = BaseFieldDefinition::create('image')
       ->setLabel(t('Image'))
@@ -224,7 +224,23 @@ class ProductAdverts extends ContentEntityBase implements ProductAdvertsInterfac
       ->setDisplayOptions('form', [
         'type' => 'image_image'
       ])
-      ->setRequired(TRUE);
+      ->setRequired(false);
+
+    $fields['embed'] = BaseFieldDefinition::create('string_long')
+      ->setLabel(t('Embed media'))
+      ->setSettings([
+        'max_length' => 50,
+        'text_processing' => 0,
+      ])
+      ->setDefaultValue('')
+      ->setDisplayOptions('view', [
+        'label' => 'above',
+        'type' => 'basic_string'
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'string_textarea'
+      ])
+      ->setRequired(false);
 
     $fields['product_id'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel('Product')
@@ -239,7 +255,7 @@ class ProductAdverts extends ContentEntityBase implements ProductAdvertsInterfac
         'label' => 'inline',
         'type' => 'entity_reference_label'
       ])
-      ->setRequired(TRUE);
+      ->setRequired(false);
 
     $fields['placements'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel(t('Placements'))
